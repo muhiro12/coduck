@@ -1,3 +1,4 @@
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -28,11 +29,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  String _result = '';
 
-  void _incrementCounter() {
+  void _scan() async {
+    var result = await BarcodeScanner.scan();
     setState(() {
-      _counter++;
+      _result = result.rawContent;
     });
   }
 
@@ -47,19 +49,19 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'You have pushed the button this many times:',
+              'Result',
             ),
             Text(
-              '$_counter',
+              '$_result',
               style: Theme.of(context).textTheme.headline4,
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
+        onPressed: _scan,
+        tooltip: 'Scan',
+        child: Icon(Icons.photo_camera),
       ),
     );
   }
