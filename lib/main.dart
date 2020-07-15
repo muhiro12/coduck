@@ -1,7 +1,11 @@
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:qrstocker/item.dart';
+import 'package:qrstocker/repository.dart';
 
-void main() {
+void main() async {
+  await Database.init();
   runApp(MyApp());
 }
 
@@ -35,34 +39,59 @@ class _MyHomePageState extends State<MyHomePage> {
     var result = await BarcodeScanner.scan();
     setState(() {
       _result = result.rawContent;
+
+      final item = Item();
+      item.title = _result;
+      item.qrText = _result;
+      Database.save(item);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Result',
+    return ValueListenableBuilder(
+      valueListenable: Database.listenable(),
+      builder: (context, Box<Item> box, __) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(widget.title),
+          ),
+          body: Center(
+            child: SizedBox(
+              width: 300,
+              height: 300,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: <Widget>[
+                  Text(
+                    'Data',
+                  ),
+                ]..addAll(
+                    box.values
+                        .map(
+                          (item) => SizedBox(
+                            width: 200,
+                            child: Card(
+                              child: Center(
+                                child: Text(
+                                  item.qrText,
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                        .toList(),
+                  ),
+              ),
             ),
-            Text(
-              '$_result',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _scan,
-        tooltip: 'Scan',
-        child: Icon(Icons.photo_camera),
-      ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: _scan,
+            tooltip: 'Scan',
+            child: Icon(Icons.photo_camera),
+          ),
+        );
+      },
     );
   }
 }
