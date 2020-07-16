@@ -18,12 +18,16 @@ class Database {
     return _box.listenable();
   }
 
-  static void save(Item item) {
-    if (item.isInBox) {
-      item.save();
-    } else {
-      _box.add(item);
+  static Future<bool> save(Item item) async {
+    if (_box.length > 9) {
+      return false;
     }
+    if (item.isInBox) {
+      await item.save();
+    } else {
+      await _box.add(item);
+    }
+    return true;
   }
 
   static void delete(Item item) {

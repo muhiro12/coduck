@@ -47,7 +47,7 @@ class HomeScaffold extends StatelessWidget {
             ),
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: _scan,
+            onPressed: () => _scan(context),
             tooltip: 'Scan',
             child: Icon(Icons.photo_camera),
           ),
@@ -56,15 +56,30 @@ class HomeScaffold extends StatelessWidget {
     );
   }
 
-  void _scan() async {
+  void _scan(BuildContext context) async {
     var result = await BarcodeScanner.scan();
+    if (result.type != ResultType.Barcode) {
+      return;
+    }
     final qrText = result.rawContent;
 
     final item = Item();
     item.title = qrText;
     item.qrText = qrText;
 
-    Database.save(item);
+    Database.save(item).then(
+      (success) {
+        if (success) {
+          return;
+        }
+        showDialog(
+          context: context,
+          child: AlertDialog(
+            title: Text('Sorry, limit is 10.'),
+          ),
+        );
+      },
+    );
   }
 
   void pushDetail(
