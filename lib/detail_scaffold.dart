@@ -46,13 +46,11 @@ class _DetailScaffoldState extends State<DetailScaffold> {
             actions: <Widget>[
               IconButton(
                 icon: Icon(Icons.delete),
-                onPressed: () {
-                  if (items.length > 1) {
-                    _delete(item);
-                  } else {
-                    _deleteAndPop(item);
-                  }
-                },
+                onPressed: () => showDeleteDialog(
+                  context,
+                  item,
+                  willPop: items.length <= 1,
+                ),
               )
             ],
           ),
@@ -104,6 +102,40 @@ class _DetailScaffoldState extends State<DetailScaffold> {
     setState(() {
       this.page = page;
     });
+  }
+
+  void showDeleteDialog(
+    BuildContext context,
+    Item item, {
+    bool willPop = false,
+  }) {
+    showDialog(
+      context: context,
+      child: CupertinoAlertDialog(
+        title: Text('Are you sure you want to delete this item?'),
+        actions: <Widget>[
+          FlatButton(
+            child: Text(
+              'Cancel',
+              style: TextStyle(
+                color: Colors.blue,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            onPressed: () => Navigator.pop(context),
+          ),
+          FlatButton(
+            child: Text(
+              'Delete',
+              style: TextStyle(
+                color: Colors.red,
+              ),
+            ),
+            onPressed: () => willPop ? _deleteAndPop(item) : _delete(item),
+          ),
+        ],
+      ),
+    );
   }
 
   void _delete(Item item) {
