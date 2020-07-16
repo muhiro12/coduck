@@ -1,6 +1,7 @@
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:qrstocker/database.dart';
 import 'package:qrstocker/item.dart';
 
@@ -61,12 +62,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: <Widget>[
                         Text(item.title),
                         SizedBox(
-                          width: 300,
-                          height: 300,
+                          width: 200,
                           child: Card(
                             child: Center(
-                              child: Text(
-                                item.qrText,
+                              child: QrImage(
+                                data: item.qrText,
                               ),
                             ),
                           ),
