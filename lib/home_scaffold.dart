@@ -36,7 +36,7 @@ class HomeScaffold extends StatelessWidget {
                         trailing: Card(
                           color: Colors.white,
                           child: QrImage(
-                            data: item.qrText,
+                            data: item.data,
                           ),
                         ),
                         onTap: () => pushDetail(
@@ -70,11 +70,11 @@ class HomeScaffold extends StatelessWidget {
     if (result.type != ResultType.Barcode) {
       return;
     }
-    final qrText = result.rawContent;
+    final data = result.rawContent;
 
     final item = Item();
-    item.title = qrText;
-    item.qrText = qrText;
+    item.title = data;
+    item.data = data;
 
     Database.save(item).then(
       (success) {
@@ -105,15 +105,15 @@ class HomeScaffold extends StatelessWidget {
   List<Item> testData() {
     final item1 = Item();
     item1.title = 'one';
-    item1.qrText = 'one_qr';
+    item1.data = 'one_qr';
     item1.note = 'oneoneoneone';
     final item2 = Item();
     item2.title = 'two';
-    item2.qrText = 'two_qr';
+    item2.data = 'two_qr';
     item2.note = 'twotwotwotwo';
     final item3 = Item();
     item3.title = 'three';
-    item3.qrText = 'three_qr';
+    item3.data = 'three_qr';
     item3.note = 'threethreethree';
     return [
       item1,

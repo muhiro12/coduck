@@ -78,7 +78,7 @@ class _DetailScaffoldState extends State<DetailScaffold> {
                                     maxHeight: 200,
                                   ),
                                   child: QrImage(
-                                    data: item.qrText,
+                                    data: item.data,
                                   ),
                                 ),
                               ),
@@ -88,7 +88,7 @@ class _DetailScaffoldState extends State<DetailScaffold> {
                       onPageChanged: _updatePage,
                     ),
                   ),
-                  Text(item.qrText),
+                  Text(item.data),
                 ],
               ),
             ),
