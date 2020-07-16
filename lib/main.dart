@@ -10,11 +10,17 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    const primaryColor = Colors.orange;
     return MaterialApp(
       title: 'QR Stocker',
       theme: ThemeData(
-        primarySwatch: Colors.teal,
+        primarySwatch: primaryColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      darkTheme: ThemeData(
+        primarySwatch: primaryColor,
+        accentColor: primaryColor,
+        brightness: Brightness.dark,
       ),
       home: MyHomePage(title: 'QR Stocker'),
     );

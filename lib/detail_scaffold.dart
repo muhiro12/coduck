@@ -73,6 +73,7 @@ class _DetailScaffoldState extends State<DetailScaffold> {
                           .map(
                             (item) => Center(
                               child: Card(
+                                color: Colors.white,
                                 child: Container(
                                   constraints: BoxConstraints(
                                     maxWidth: 200,

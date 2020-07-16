@@ -49,7 +49,7 @@ class HomeScaffold extends StatelessWidget {
           floatingActionButton: FloatingActionButton(
             onPressed: () => _scan(context),
             tooltip: 'Scan',
-            child: Icon(Icons.photo_camera),
+            child: Icon(Icons.camera),
           ),
         );
       },
@@ -75,7 +75,7 @@ class HomeScaffold extends StatelessWidget {
         showDialog(
           context: context,
           child: AlertDialog(
-            title: Text('Sorry, limit is 10.'),
+            title: Text('Sorry, limit is 5.'),
           ),
         );
       },
