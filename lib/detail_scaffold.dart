@@ -42,7 +42,7 @@ class _DetailScaffoldState extends State<DetailScaffold> {
             items.isNotEmpty ? items[min(page, items.length - 1)] : Item();
         return Scaffold(
           appBar: AppBar(
-            title: Text(item.title),
+            title: Text('Detail'),
             actions: <Widget>[
               IconButton(
                 icon: Icon(Icons.delete),
@@ -65,7 +65,7 @@ class _DetailScaffoldState extends State<DetailScaffold> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(item.qrText),
+                  Text(item.note),
                   Expanded(
                     child: PageView(
                       controller: _pageController,
@@ -90,7 +90,7 @@ class _DetailScaffoldState extends State<DetailScaffold> {
                       onPageChanged: _updatePage,
                     ),
                   ),
-                  Text(item.note),
+                  Text(item.qrText),
                 ],
               ),
             ),

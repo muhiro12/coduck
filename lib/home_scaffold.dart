@@ -33,8 +33,11 @@ class HomeScaffold extends StatelessWidget {
                         title: Text(
                           item.title,
                         ),
-                        trailing: QrImage(
-                          data: item.qrText,
+                        trailing: Card(
+                          color: Colors.white,
+                          child: QrImage(
+                            data: item.qrText,
+                          ),
                         ),
                         onTap: () => pushDetail(
                           context,
@@ -75,7 +78,7 @@ class HomeScaffold extends StatelessWidget {
         showDialog(
           context: context,
           child: AlertDialog(
-            title: Text('Sorry, limit is 5.'),
+            title: Text('Sorry, the limit is 5 cards.'),
           ),
         );
       },
