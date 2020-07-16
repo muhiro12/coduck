@@ -1,9 +1,6 @@
-import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 import 'package:qrstocker/database.dart';
-import 'package:qrstocker/item.dart';
+import 'package:qrstocker/home_scaffold.dart';
 
 void main() async {
   await Database.init();
@@ -34,56 +31,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  void _scan() async {
-    var result = await BarcodeScanner.scan();
-    final qrText = result.rawContent;
-
-    final item = Item();
-    item.title = qrText;
-    item.qrText = qrText;
-    Database.save(item);
-  }
-
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: Database.listenable(),
-      builder: (context, Box<Item> box, __) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(widget.title),
-          ),
-          body: SafeArea(
-            child: PageView(
-              children: box.values
-                  .map(
-                    (item) => Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(item.title),
-                        SizedBox(
-                          width: 200,
-                          child: Card(
-                            child: Center(
-                              child: QrImage(
-                                data: item.qrText,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                  .toList(),
-            ),
-          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: _scan,
-            tooltip: 'Scan',
-            child: Icon(Icons.photo_camera),
-          ),
-        );
-      },
-    );
+    return HomeScaffold(widget.title);
   }
 }
