@@ -1,95 +1,108 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:qrstocker/database.dart';
 import 'package:qrstocker/item.dart';
 
 class DetailScaffold extends StatefulWidget {
-  DetailScaffold(
-    this._items,
-    this._initialPage,
-  );
+  DetailScaffold(this._initialPage);
 
-  final List<Item> _items;
   final int _initialPage;
 
   @override
   State<StatefulWidget> createState() {
-    return _DetailScaffoldState(
-      PageController(
-        initialPage: _initialPage,
-      ),
-    );
+    return _DetailScaffoldState(_initialPage);
   }
 }
 
 class _DetailScaffoldState extends State<DetailScaffold> {
-  _DetailScaffoldState(this._pageController);
+  _DetailScaffoldState(int initialPage)
+      : _pageController = PageController(initialPage: initialPage);
 
   final PageController _pageController;
-  Item _item;
+
+  int page;
 
   @override
   void initState() {
     super.initState();
-    _item = widget._items[widget._initialPage];
+    page = widget._initialPage;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          _item.title,
-        ),
-      ),
-      body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.only(
-            top: 40,
-            bottom: 40,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                _item.qrText,
-              ),
-              Expanded(
-                child: PageView(
-                  controller: _pageController,
-                  children: widget._items
-                      .map(
-                        (item) => Center(
-                          child: Card(
-                            child: Container(
-                              constraints: BoxConstraints(
-                                maxWidth: 200,
-                                maxHeight: 200,
-                              ),
-                              child: QrImage(
-                                data: item.qrText,
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                      .toList(),
-                  onPageChanged: (page) => _updateItem(page),
-                ),
-              ),
-              Text(
-                _item.note,
-              ),
+    return ValueListenableBuilder(
+      valueListenable: Database.listenable(),
+      builder: (context, Box<Item> box, _) {
+        final items = box.values.toList();
+        if (items.isEmpty) {
+          Navigator.pop(context);
+          return Container();
+        }
+        final item = items[min(page, items.length - 1)];
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(item.title),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () => _delete(item),
+              )
             ],
           ),
-        ),
-      ),
+          body: SafeArea(
+            child: Container(
+              padding: EdgeInsets.only(
+                top: 40,
+                bottom: 40,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(item.qrText),
+                  Expanded(
+                    child: PageView(
+                      controller: _pageController,
+                      children: items
+                          .map(
+                            (item) => Center(
+                              child: Card(
+                                child: Container(
+                                  constraints: BoxConstraints(
+                                    maxWidth: 200,
+                                    maxHeight: 200,
+                                  ),
+                                  child: QrImage(
+                                    data: item.qrText,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                          .toList(),
+                      onPageChanged: _updatePage,
+                    ),
+                  ),
+                  Text(item.note),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
-  void _updateItem(int page) {
+  void _updatePage(int page) {
     setState(() {
-      _item = widget._items[page];
+      this.page = page;
     });
+  }
+
+  void _delete(Item item) {
+    Database.delete(item);
   }
 }

@@ -30,8 +30,8 @@ class Database {
     return true;
   }
 
-  static void delete(Item item) {
-    item.delete();
+  static Future delete(Item item) async {
+    await item.delete();
   }
 }
 

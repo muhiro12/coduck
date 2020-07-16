@@ -17,7 +17,7 @@ class HomeScaffold extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: Database.listenable(),
       builder: (context, Box<Item> box, __) {
-        final List<Item> items = testData(); //box.values.toList();
+        final List<Item> items = box.values.toList();
         return Scaffold(
           appBar: AppBar(
             title: Text(
@@ -38,7 +38,6 @@ class HomeScaffold extends StatelessWidget {
                         ),
                         onTap: () => pushDetail(
                           context,
-                          items,
                           items.indexOf(item),
                         ),
                       ),
@@ -85,15 +84,11 @@ class HomeScaffold extends StatelessWidget {
 
   void pushDetail(
     BuildContext context,
-    List<Item> items,
     int index,
   ) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => DetailScaffold(
-          items,
-          index,
-        ),
+        builder: (_) => DetailScaffold(index),
       ),
     );
   }
