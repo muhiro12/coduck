@@ -17,6 +17,7 @@ class HomeScaffold extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: Database.listenable(),
       builder: (context, Box<Item> box, __) {
+        final List<Item> items = testData(); //box.values.toList();
         return Scaffold(
           appBar: AppBar(
             title: Text(
@@ -25,7 +26,7 @@ class HomeScaffold extends StatelessWidget {
           ),
           body: SafeArea(
             child: ListView(
-              children: box.values
+              children: items
                   .map(
                     (item) => Card(
                       child: ListTile(
@@ -37,8 +38,8 @@ class HomeScaffold extends StatelessWidget {
                         ),
                         onTap: () => pushDetail(
                           context,
-                          item,
-                          box.values.toList(),
+                          items,
+                          items.indexOf(item),
                         ),
                       ),
                     ),
@@ -84,18 +85,36 @@ class HomeScaffold extends StatelessWidget {
 
   void pushDetail(
     BuildContext context,
-    Item item,
     List<Item> items,
+    int index,
   ) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => DetailScaffold(
           items,
-          PageController(
-            initialPage: items.indexOf(item),
-          ),
+          index,
         ),
       ),
     );
+  }
+
+  List<Item> testData() {
+    final item1 = Item();
+    item1.title = 'one';
+    item1.qrText = 'one_qr';
+    item1.note = 'oneoneoneone';
+    final item2 = Item();
+    item2.title = 'two';
+    item2.qrText = 'two_qr';
+    item2.note = 'twotwotwotwo';
+    final item3 = Item();
+    item3.title = 'three';
+    item3.qrText = 'three_qr';
+    item3.note = 'threethreethree';
+    return [
+      item1,
+      item2,
+      item3,
+    ];
   }
 }
