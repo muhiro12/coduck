@@ -17,8 +17,9 @@ class ItemAdapter extends TypeAdapter<Item> {
       for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Item()
-      ..title = fields[2] as String
-      ..qrText = fields[3] as String;
+      ..title = fields[1] as String
+      ..qrText = fields[2] as String
+      ..note = fields[3] as String;
   }
 
   @override
@@ -26,12 +27,12 @@ class ItemAdapter extends TypeAdapter<Item> {
     writer
       ..writeByte(4)
       ..writeByte(0)
-      ..write(obj.key)
+      ..write(obj.updatedAt)
       ..writeByte(1)
-      ..write(obj.createdAt)
-      ..writeByte(2)
       ..write(obj.title)
+      ..writeByte(2)
+      ..write(obj.qrText)
       ..writeByte(3)
-      ..write(obj.qrText);
+      ..write(obj.note);
   }
 }

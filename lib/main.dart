@@ -1,8 +1,8 @@
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:qrstocker/database.dart';
 import 'package:qrstocker/item.dart';
-import 'package:qrstocker/repository.dart';
 
 void main() async {
   await Database.init();
@@ -13,12 +13,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'QR Stocker',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.teal,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'QR Stocker'),
     );
   }
 }
@@ -33,18 +33,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String _result = '';
-
   void _scan() async {
     var result = await BarcodeScanner.scan();
-    setState(() {
-      _result = result.rawContent;
+    final qrText = result.rawContent;
 
-      final item = Item();
-      item.title = _result;
-      item.qrText = _result;
-      Database.save(item);
-    });
+    final item = Item();
+    item.title = qrText;
+    item.qrText = qrText;
+    Database.save(item);
   }
 
   @override
@@ -56,33 +52,29 @@ class _MyHomePageState extends State<MyHomePage> {
           appBar: AppBar(
             title: Text(widget.title),
           ),
-          body: Center(
-            child: SizedBox(
-              width: 300,
-              height: 300,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  Text(
-                    'Data',
-                  ),
-                ]..addAll(
-                    box.values
-                        .map(
-                          (item) => SizedBox(
-                            width: 200,
-                            child: Card(
-                              child: Center(
-                                child: Text(
-                                  item.qrText,
-                                ),
+          body: SafeArea(
+            child: PageView(
+              children: box.values
+                  .map(
+                    (item) => Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(item.title),
+                        SizedBox(
+                          width: 300,
+                          height: 300,
+                          child: Card(
+                            child: Center(
+                              child: Text(
+                                item.qrText,
                               ),
                             ),
                           ),
-                        )
-                        .toList(),
-                  ),
-              ),
+                        ),
+                      ],
+                    ),
+                  )
+                  .toList(),
             ),
           ),
           floatingActionButton: FloatingActionButton(

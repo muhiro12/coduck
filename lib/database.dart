@@ -4,7 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:qrstocker/item.dart';
 
 class Database {
-  static String _key = "item";
+  static String _key = HiveBox.items.toString();
 
   static Box<Item> _box;
 
@@ -29,4 +29,8 @@ class Database {
   static void delete(Item item) {
     item.delete();
   }
+}
+
+enum HiveBox {
+  items,
 }

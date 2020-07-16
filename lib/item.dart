@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
 
 part 'item.g.dart';
@@ -6,14 +5,14 @@ part 'item.g.dart';
 @HiveType(typeId: 0)
 class Item extends HiveObject {
   @HiveField(0)
-  final String key = UniqueKey().toString();
+  final DateTime updatedAt = DateTime.now();
 
   @HiveField(1)
-  final DateTime createdAt = DateTime.now();
+  String title = '';
 
   @HiveField(2)
-  String title;
+  String qrText = '';
 
   @HiveField(3)
-  String qrText;
+  String note = '';
 }
