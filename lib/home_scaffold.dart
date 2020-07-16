@@ -60,7 +60,13 @@ class HomeScaffold extends StatelessWidget {
   }
 
   void _scan(BuildContext context) async {
-    var result = await BarcodeScanner.scan();
+    var result = await BarcodeScanner.scan(
+      options: ScanOptions(
+        restrictFormat: [
+          BarcodeFormat.qr,
+        ],
+      ),
+    );
     if (result.type != ResultType.Barcode) {
       return;
     }
