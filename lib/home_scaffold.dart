@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:qrstocker/database.dart';
+import 'package:qrstocker/detail_scaffold.dart';
 import 'package:qrstocker/item.dart';
 
 class HomeScaffold extends StatelessWidget {
@@ -16,32 +17,30 @@ class HomeScaffold extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: Database.listenable(),
       builder: (context, Box<Item> box, __) {
-        final item = Item();
-        item.title = 'title';
-        item.qrText = 'qrcode';
         return Scaffold(
           appBar: AppBar(
-            title: Text(_title),
+            title: Text(
+              _title,
+            ),
           ),
           body: SafeArea(
-            child: PageView(
-              children: [item, item]
+            child: ListView(
+              children: box.values
                   .map(
-                    (item) => Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(item.title),
-                        SizedBox(
-                          width: 200,
-                          child: Card(
-                            child: Center(
-                              child: QrImage(
-                                data: item.qrText,
-                              ),
-                            ),
-                          ),
+                    (item) => Card(
+                      child: ListTile(
+                        title: Text(
+                          item.title,
                         ),
-                      ],
+                        trailing: QrImage(
+                          data: item.qrText,
+                        ),
+                        onTap: () => pushDetail(
+                          context,
+                          item,
+                          box.values.toList(),
+                        ),
+                      ),
                     ),
                   )
                   .toList(),
@@ -66,5 +65,22 @@ class HomeScaffold extends StatelessWidget {
     item.qrText = qrText;
 
     Database.save(item);
+  }
+
+  void pushDetail(
+    BuildContext context,
+    Item item,
+    List<Item> items,
+  ) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => DetailScaffold(
+          items,
+          PageController(
+            initialPage: items.indexOf(item),
+          ),
+        ),
+      ),
+    );
   }
 }
