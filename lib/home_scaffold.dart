@@ -101,24 +101,4 @@ class HomeScaffold extends StatelessWidget {
       ),
     );
   }
-
-  List<Item> testData() {
-    final item1 = Item();
-    item1.title = 'one';
-    item1.data = 'one_qr';
-    item1.note = 'oneoneoneone';
-    final item2 = Item();
-    item2.title = 'two';
-    item2.data = 'two_qr';
-    item2.note = 'twotwotwotwo';
-    final item3 = Item();
-    item3.title = 'three';
-    item3.data = 'three_qr';
-    item3.note = 'threethreethree';
-    return [
-      item1,
-      item2,
-      item3,
-    ];
-  }
 }
