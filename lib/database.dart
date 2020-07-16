@@ -19,7 +19,7 @@ class Database {
   }
 
   static Future<bool> save(Item item) async {
-    if (_box.length > 9) {
+    if (_box.length >= 5) {
       return false;
     }
     if (item.isInBox) {

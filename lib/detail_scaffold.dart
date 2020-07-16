@@ -38,18 +38,21 @@ class _DetailScaffoldState extends State<DetailScaffold> {
       valueListenable: Database.listenable(),
       builder: (context, Box<Item> box, _) {
         final items = box.values.toList();
-        if (items.isEmpty) {
-          Navigator.pop(context);
-          return Container();
-        }
-        final item = items[min(page, items.length - 1)];
+        final item =
+            items.isNotEmpty ? items[min(page, items.length - 1)] : Item();
         return Scaffold(
           appBar: AppBar(
             title: Text(item.title),
             actions: <Widget>[
               IconButton(
                 icon: Icon(Icons.delete),
-                onPressed: () => _delete(item),
+                onPressed: () {
+                  if (items.length > 1) {
+                    _delete(item);
+                  } else {
+                    _deleteAndPop(item);
+                  }
+                },
               )
             ],
           ),
@@ -104,5 +107,10 @@ class _DetailScaffoldState extends State<DetailScaffold> {
 
   void _delete(Item item) {
     Database.delete(item);
+  }
+
+  void _deleteAndPop(Item item) {
+    Navigator.pop(context);
+    _delete(item);
   }
 }
