@@ -43,6 +43,11 @@ dev_dependencies:
 dependency_overrides:
   dartx: ^0.3.0
 
+flutter_icons:
+  image_path: 'assets/launcher.png'
+  android: true
+  ios: true
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
