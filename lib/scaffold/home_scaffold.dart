@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:qrstocker/database.dart';
-import 'package:qrstocker/detail_scaffold.dart';
-import 'package:qrstocker/item.dart';
+import 'package:qrstocker/entity/item.dart';
+import 'package:qrstocker/model/database.dart';
+import 'package:qrstocker/scaffold/detail_scaffold.dart';
 
 class HomeScaffold extends StatelessWidget {
   HomeScaffold(this._title);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qrstocker/database.dart';
-import 'package:qrstocker/home_scaffold.dart';
+import 'package:qrstocker/model/database.dart';
+import 'package:qrstocker/scaffold/home_scaffold.dart';
 
 void main() async {
   await Database.init();

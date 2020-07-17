@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:qrstocker/item.dart';
+import 'package:qrstocker/entity/item.dart';
 
 class Database {
   static String _key = HiveBox.items.toString();
