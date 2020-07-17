@@ -120,7 +120,9 @@ class EditScaffold extends StatelessWidget {
 
   void _save() {
     Database.save(
-      _item..note = _noteController.text,
+      _item
+        ..title = _titleController.text
+        ..note = _noteController.text,
     );
   }
 
