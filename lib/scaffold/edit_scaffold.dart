@@ -64,7 +64,7 @@ class EditScaffold extends StatelessWidget {
                   ),
                 ),
               ),
-              Text(_item.data),
+              SelectableText(_item.data),
             ],
           ),
         ),

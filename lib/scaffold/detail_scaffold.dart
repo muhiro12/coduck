@@ -78,7 +78,7 @@ class _DetailScaffoldState extends State<DetailScaffold> {
                       onPageChanged: _updatePage,
                     ),
                   ),
-                  Text(item.data),
+                  SelectableText(item.data),
                 ],
               ),
             ),
