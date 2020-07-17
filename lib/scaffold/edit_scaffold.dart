@@ -40,10 +40,7 @@ class EditScaffold extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              TextField(
-                controller: _noteController,
-                textAlign: TextAlign.center,
-              ),
+              SelectableText(_item.data),
               Expanded(
                 child: Center(
                   child: Card(
@@ -60,7 +57,10 @@ class EditScaffold extends StatelessWidget {
                   ),
                 ),
               ),
-              SelectableText(_item.data),
+              TextField(
+                controller: _noteController,
+                textAlign: TextAlign.center,
+              ),
             ],
           ),
         ),

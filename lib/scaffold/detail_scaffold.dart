@@ -53,7 +53,7 @@ class _DetailScaffoldState extends State<DetailScaffold> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(item.note),
+                  SelectableText(item.data),
                   Expanded(
                     child: PageView(
                       controller: _pageController,
@@ -78,7 +78,7 @@ class _DetailScaffoldState extends State<DetailScaffold> {
                       onPageChanged: _updatePage,
                     ),
                   ),
-                  SelectableText(item.data),
+                  SelectableText(item.note),
                 ],
               ),
             ),
