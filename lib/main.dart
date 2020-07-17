@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     const primaryColor = Colors.orange;
     return MaterialApp(
-      title: 'QR Stocker',
+      title: 'QRStocker',
       theme: ThemeData(
         primarySwatch: primaryColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         accentColor: primaryColor,
         brightness: Brightness.dark,
       ),
-      home: MyHomePage(title: 'QR Stocker'),
+      home: MyHomePage(title: 'QRStocker'),
     );
   }
 }
