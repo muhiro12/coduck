@@ -51,9 +51,22 @@ class _DetailScaffoldState extends State<DetailScaffold> {
                 20,
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  SelectableText(item.data),
+                  Flexible(
+                    child: TextField(
+                      controller: TextEditingController(
+                        text: item.note,
+                      ),
+                      readOnly: true,
+                      maxLines: 5,
+                      decoration: InputDecoration(
+                        labelText: 'Note',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
                   Expanded(
                     child: PageView(
                       controller: _pageController,
@@ -78,7 +91,20 @@ class _DetailScaffoldState extends State<DetailScaffold> {
                       onPageChanged: _updatePage,
                     ),
                   ),
-                  SelectableText(item.note),
+                  Flexible(
+                    child: TextField(
+                      controller: TextEditingController(
+                        text: item.data,
+                      ),
+                      readOnly: true,
+                      maxLines: 5,
+                      decoration: InputDecoration(
+                        labelText: 'Data',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
