@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info/package_info.dart';
 
 class SettingsScaffold extends StatelessWidget {
   @override
@@ -23,8 +24,13 @@ class SettingsScaffold extends StatelessWidget {
     );
   }
 
-  void _showAbout(BuildContext context) {
-    showAboutDialog(context: context);
+  void _showAbout(BuildContext context) async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    final version = 'Version: ' + packageInfo.version;
+    showAboutDialog(
+      context: context,
+      applicationVersion: version,
+    );
   }
 
   static void present(BuildContext context) {
