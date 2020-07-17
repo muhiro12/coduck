@@ -6,6 +6,7 @@ import 'package:qrstocker/entity/item.dart';
 import 'package:qrstocker/model/database.dart';
 import 'package:qrstocker/model/scanner.dart';
 import 'package:qrstocker/scaffold/detail_scaffold.dart';
+import 'package:qrstocker/scaffold/settings_scaffold.dart';
 
 class HomeScaffold extends StatelessWidget {
   HomeScaffold(this._title);
@@ -23,6 +24,12 @@ class HomeScaffold extends StatelessWidget {
             title: Text(
               _title,
             ),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.settings),
+                onPressed: () => _presentSettings(context),
+              )
+            ],
           ),
           body: SafeArea(
             child: ListView(
@@ -90,5 +97,9 @@ class HomeScaffold extends StatelessWidget {
         builder: (_) => DetailScaffold(index),
       ),
     );
+  }
+
+  void _presentSettings(BuildContext context) {
+    SettingsScaffold.present(context);
   }
 }
