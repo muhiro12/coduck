@@ -1,11 +1,10 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:qrstocker/database.dart';
-import 'package:qrstocker/item.dart';
+import 'package:qrstocker/entity/item.dart';
+import 'package:qrstocker/model/database.dart';
+import 'package:qrstocker/scaffold/edit_scaffold.dart';
 
 class DetailScaffold extends StatefulWidget {
   DetailScaffold(this._initialPage);
@@ -38,32 +37,36 @@ class _DetailScaffoldState extends State<DetailScaffold> {
       valueListenable: Database.listenable(),
       builder: (context, Box<Item> box, _) {
         final items = box.values.toList();
-        final item =
-            items.isNotEmpty ? items[min(page, items.length - 1)] : Item();
+        final item = items[page];
         return Scaffold(
           appBar: AppBar(
-            title: Text('Detail'),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: () => showDeleteDialog(
-                  context,
-                  item,
-                  willPop: items.length <= 1,
-                ),
-              )
-            ],
+            title: Text(item.title),
           ),
           body: SafeArea(
             child: Container(
-              padding: EdgeInsets.only(
-                top: 40,
-                bottom: 40,
+              padding: EdgeInsets.fromLTRB(
+                40,
+                20,
+                40,
+                20,
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Text(item.note),
+                  Flexible(
+                    child: TextField(
+                      controller: TextEditingController(
+                        text: item.note,
+                      ),
+                      readOnly: true,
+                      maxLines: 5,
+                      decoration: InputDecoration(
+                        labelText: 'Note',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
                   Expanded(
                     child: PageView(
                       controller: _pageController,
@@ -88,10 +91,31 @@ class _DetailScaffoldState extends State<DetailScaffold> {
                       onPageChanged: _updatePage,
                     ),
                   ),
-                  Text(item.data),
+                  Flexible(
+                    child: TextField(
+                      controller: TextEditingController(
+                        text: item.data,
+                      ),
+                      readOnly: true,
+                      maxLines: 5,
+                      decoration: InputDecoration(
+                        labelText: 'Data',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () => _pushEdit(
+              context,
+              item,
+            ),
+            tooltip: 'Edit',
+            child: Icon(Icons.edit),
           ),
         );
       },
@@ -104,46 +128,13 @@ class _DetailScaffoldState extends State<DetailScaffold> {
     });
   }
 
-  void showDeleteDialog(
+  void _pushEdit(
     BuildContext context,
-    Item item, {
-    bool willPop = false,
-  }) {
-    showDialog(
-      context: context,
-      child: CupertinoAlertDialog(
-        title: Text('Are you sure you want to delete this item?'),
-        actions: <Widget>[
-          FlatButton(
-            child: Text(
-              'Cancel',
-              style: TextStyle(
-                color: Colors.blue,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            onPressed: () => Navigator.pop(context),
-          ),
-          FlatButton(
-            child: Text(
-              'Delete',
-              style: TextStyle(
-                color: Colors.red,
-              ),
-            ),
-            onPressed: () => willPop ? _deleteAndPop(item) : _delete(item),
-          ),
-        ],
-      ),
+    Item item,
+  ) {
+    EditScaffold.push(
+      context,
+      item,
     );
-  }
-
-  void _delete(Item item) {
-    Database.delete(item);
-  }
-
-  void _deleteAndPop(Item item) {
-    Navigator.pop(context);
-    _delete(item);
   }
 }
