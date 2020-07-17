@@ -8,14 +8,10 @@ class EditScaffold extends StatelessWidget {
   EditScaffold(this._item)
       : _noteController = TextEditingController(
           text: _item.note,
-        ),
-        _dataController = TextEditingController(
-          text: _item.data,
         );
 
   final Item _item;
   final TextEditingController _noteController;
-  final TextEditingController _dataController;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +69,7 @@ class EditScaffold extends StatelessWidget {
         tooltip: 'Done',
         child: Icon(Icons.done),
         onPressed: () {
-          _save(_item);
+          _save();
           Navigator.popUntil(
             context,
             (route) => route.isFirst,
@@ -107,7 +103,7 @@ class EditScaffold extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              _delete(_item);
+              _delete();
               Navigator.popUntil(
                 context,
                 (route) => route.isFirst,
@@ -119,16 +115,14 @@ class EditScaffold extends StatelessWidget {
     );
   }
 
-  void _save(Item item) {
+  void _save() {
     Database.save(
-      item
-        ..note = _noteController.text
-        ..data = _dataController.text,
+      _item..note = _noteController.text,
     );
   }
 
-  void _delete(Item item) {
-    Database.delete(item);
+  void _delete() {
+    Database.delete(_item);
   }
 
   static void push(
