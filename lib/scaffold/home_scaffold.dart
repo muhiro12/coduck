@@ -62,6 +62,10 @@ class HomeScaffold extends StatelessWidget {
   void _scan(BuildContext context) async {
     final data = await Scanner.scan();
 
+    if (data == null) {
+      return;
+    }
+
     final item = Item();
     item.title = data;
     item.data = data;
