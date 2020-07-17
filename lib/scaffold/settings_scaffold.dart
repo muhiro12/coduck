@@ -8,6 +8,10 @@ class SettingsScaffold extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Settings'),
+        leading: IconButton(
+          icon: Icon(Icons.close),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       body: SafeArea(
         child: ListView(
