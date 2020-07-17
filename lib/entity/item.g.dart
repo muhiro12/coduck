@@ -18,7 +18,7 @@ class ItemAdapter extends TypeAdapter<Item> {
     };
     return Item()
       ..title = fields[1] as String
-      ..qrText = fields[2] as String
+      ..data = fields[2] as String
       ..note = fields[3] as String;
   }
 
@@ -31,7 +31,7 @@ class ItemAdapter extends TypeAdapter<Item> {
       ..writeByte(1)
       ..write(obj.title)
       ..writeByte(2)
-      ..write(obj.qrText)
+      ..write(obj.data)
       ..writeByte(3)
       ..write(obj.note);
   }

@@ -11,7 +11,7 @@ class Item extends HiveObject {
   String title = '';
 
   @HiveField(2)
-  String qrText = '';
+  String data = '';
 
   @HiveField(3)
   String note = '';

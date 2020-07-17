@@ -1,11 +1,11 @@
-import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:qrstocker/database.dart';
-import 'package:qrstocker/detail_scaffold.dart';
-import 'package:qrstocker/item.dart';
+import 'package:qrstocker/entity/item.dart';
+import 'package:qrstocker/model/database.dart';
+import 'package:qrstocker/model/scanner.dart';
+import 'package:qrstocker/scaffold/detail_scaffold.dart';
 
 class HomeScaffold extends StatelessWidget {
   HomeScaffold(this._title);
@@ -36,7 +36,7 @@ class HomeScaffold extends StatelessWidget {
                         trailing: Card(
                           color: Colors.white,
                           child: QrImage(
-                            data: item.qrText,
+                            data: item.data,
                           ),
                         ),
                         onTap: () => pushDetail(
@@ -60,21 +60,11 @@ class HomeScaffold extends StatelessWidget {
   }
 
   void _scan(BuildContext context) async {
-    var result = await BarcodeScanner.scan(
-      options: ScanOptions(
-        restrictFormat: [
-          BarcodeFormat.qr,
-        ],
-      ),
-    );
-    if (result.type != ResultType.Barcode) {
-      return;
-    }
-    final qrText = result.rawContent;
+    final data = await Scanner.scan();
 
     final item = Item();
-    item.title = qrText;
-    item.qrText = qrText;
+    item.title = data;
+    item.data = data;
 
     Database.save(item).then(
       (success) {
@@ -100,25 +90,5 @@ class HomeScaffold extends StatelessWidget {
         builder: (_) => DetailScaffold(index),
       ),
     );
-  }
-
-  List<Item> testData() {
-    final item1 = Item();
-    item1.title = 'one';
-    item1.qrText = 'one_qr';
-    item1.note = 'oneoneoneone';
-    final item2 = Item();
-    item2.title = 'two';
-    item2.qrText = 'two_qr';
-    item2.note = 'twotwotwotwo';
-    final item3 = Item();
-    item3.title = 'three';
-    item3.qrText = 'three_qr';
-    item3.note = 'threethreethree';
-    return [
-      item1,
-      item2,
-      item3,
-    ];
   }
 }
