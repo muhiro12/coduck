@@ -35,9 +35,11 @@ class EditScaffold extends StatelessWidget {
       ),
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.only(
-            top: 40,
-            bottom: 40,
+          padding: EdgeInsets.fromLTRB(
+            40,
+            20,
+            40,
+            20,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
