@@ -60,6 +60,10 @@ class EditScaffold extends StatelessWidget {
               TextField(
                 controller: _noteController,
                 textAlign: TextAlign.center,
+                maxLines: 5,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                ),
               ),
             ],
           ),
