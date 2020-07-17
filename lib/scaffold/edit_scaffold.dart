@@ -62,10 +62,7 @@ class EditScaffold extends StatelessWidget {
                   ),
                 ),
               ),
-              TextField(
-                controller: _dataController,
-                textAlign: TextAlign.center,
-              )
+              Text(_item.data),
             ],
           ),
         ),
