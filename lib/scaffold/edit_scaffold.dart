@@ -134,8 +134,8 @@ class EditScaffold extends StatelessWidget {
   ) {
     Navigator.push(
       context,
-      PageRouteBuilder(
-        pageBuilder: (_, __, ___) => EditScaffold(item),
+      MaterialPageRoute(
+        builder: (_) => EditScaffold(item),
       ),
     );
   }
