@@ -17,15 +17,17 @@ class ItemAdapter extends TypeAdapter<Item> {
       for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Item()
+      ..updatedAt = fields[0] as DateTime
       ..title = fields[1] as String
       ..data = fields[2] as String
-      ..note = fields[3] as String;
+      ..note = fields[3] as String
+      ..type = fields[4] as int;
   }
 
   @override
   void write(BinaryWriter writer, Item obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.updatedAt)
       ..writeByte(1)
@@ -33,6 +35,8 @@ class ItemAdapter extends TypeAdapter<Item> {
       ..writeByte(2)
       ..write(obj.data)
       ..writeByte(3)
-      ..write(obj.note);
+      ..write(obj.note)
+      ..writeByte(4)
+      ..write(obj.type);
   }
 }

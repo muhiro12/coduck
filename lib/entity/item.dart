@@ -5,7 +5,7 @@ part 'item.g.dart';
 @HiveType(typeId: 0)
 class Item extends HiveObject {
   @HiveField(0)
-  final DateTime updatedAt = DateTime.now();
+  DateTime updatedAt = DateTime.now();
 
   @HiveField(1)
   String title = '';
@@ -15,4 +15,7 @@ class Item extends HiveObject {
 
   @HiveField(3)
   String note = '';
+
+  @HiveField(4)
+  int type = 0;
 }
