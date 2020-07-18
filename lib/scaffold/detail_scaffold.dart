@@ -107,6 +107,9 @@ class _DetailScaffoldState extends State<DetailScaffold> {
             tooltip: 'Edit',
             child: Icon(Icons.edit),
           ),
+          bottomNavigationBar: SizedBox(
+            height: kBottomNavigationBarHeight + AppSize.spaceL,
+          ),
         );
       },
     );

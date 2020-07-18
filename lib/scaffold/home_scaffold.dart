@@ -64,6 +64,9 @@ class HomeScaffold extends StatelessWidget {
             tooltip: 'Scan',
             child: Icon(Icons.photo_camera),
           ),
+          bottomNavigationBar: SizedBox(
+            height: kBottomNavigationBarHeight + AppSize.spaceL,
+          ),
         );
       },
     );
