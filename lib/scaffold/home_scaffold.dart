@@ -27,6 +27,7 @@ class HomeScaffold extends StatelessWidget {
             ),
             actions: <Widget>[
               IconButton(
+                tooltip: 'Settings',
                 icon: Icon(Icons.settings),
                 onPressed: () => _presentSettings(context),
               )
@@ -61,7 +62,7 @@ class HomeScaffold extends StatelessWidget {
           floatingActionButton: FloatingActionButton(
             onPressed: () => _scan(context),
             tooltip: 'Scan',
-            child: Icon(Icons.camera),
+            child: Icon(Icons.photo_camera),
           ),
         );
       },

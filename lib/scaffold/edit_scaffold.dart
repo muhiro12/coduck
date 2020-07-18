@@ -26,11 +26,13 @@ class EditScaffold extends StatelessWidget {
         appBar: AppBar(
           title: Text(_code.title),
           leading: IconButton(
+            tooltip: 'Cancel',
             icon: Icon(Icons.close),
             onPressed: () => Navigator.pop(context),
           ),
           actions: <Widget>[
             IconButton(
+              tooltip: 'Delete',
               icon: Icon(Icons.delete),
               onPressed: () => _showDeleteDialog(context),
             ),
