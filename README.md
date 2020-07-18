@@ -1,6 +1,6 @@
 # coduck
 
-Stocker for QR code.
+Stock your code.
 
 ## Getting Started
 
