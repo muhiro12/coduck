@@ -82,6 +82,9 @@ class EditScaffold extends StatelessWidget {
             );
           },
         ),
+        bottomNavigationBar: SizedBox(
+          height: kBottomNavigationBarHeight + AppSize.spaceL,
+        ),
       ),
     );
   }

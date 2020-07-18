@@ -1,3 +1,7 @@
+# Project
+GoogleService-Info.plist
+app_secret.dart
+
 # Miscellaneous
 *.class
 *.log
