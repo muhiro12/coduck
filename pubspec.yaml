@@ -32,6 +32,7 @@ dependencies:
   hive_flutter: ^0.3.0+2
   barcode_scan: ^3.0.1
   qr_flutter: ^3.2.0
+  package_info: ^0.4.1
 
 dev_dependencies:
   flutter_test:
