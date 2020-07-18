@@ -1,5 +1,6 @@
 import 'package:coduck/entity/code.dart';
 import 'package:coduck/entity/code_type.dart';
+import 'package:coduck/parameter/app_rule.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -20,7 +21,7 @@ class Database {
   }
 
   static Future<bool> save(Code code) async {
-    if (_box.length >= 5) {
+    if (_box.length >= AppRule.codesCountLimit) {
       return false;
     }
     if (code.isInBox) {

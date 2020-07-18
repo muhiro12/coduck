@@ -1,6 +1,7 @@
 import 'package:coduck/entity/code.dart';
 import 'package:coduck/model/database.dart';
 import 'package:coduck/model/scanner.dart';
+import 'package:coduck/parameter/app_size.dart';
 import 'package:coduck/scaffold/detail_scaffold.dart';
 import 'package:coduck/scaffold/settings_scaffold.dart';
 import 'package:coduck/widget/code_image.dart';
@@ -26,6 +27,7 @@ class HomeScaffold extends StatelessWidget {
             ),
             actions: <Widget>[
               IconButton(
+                tooltip: 'Settings',
                 icon: Icon(Icons.settings),
                 onPressed: () => _presentSettings(context),
               )
@@ -36,6 +38,12 @@ class HomeScaffold extends StatelessWidget {
               children: codes
                   .map(
                     (code) => Card(
+                      margin: EdgeInsets.fromLTRB(
+                        AppSize.spaceM,
+                        AppSize.spaceS,
+                        AppSize.spaceM,
+                        AppSize.spaceS,
+                      ),
                       child: ListTile(
                         title: Text(
                           code.title,
@@ -54,7 +62,7 @@ class HomeScaffold extends StatelessWidget {
           floatingActionButton: FloatingActionButton(
             onPressed: () => _scan(context),
             tooltip: 'Scan',
-            child: Icon(Icons.camera),
+            child: Icon(Icons.photo_camera),
           ),
         );
       },
