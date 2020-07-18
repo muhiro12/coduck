@@ -1,10 +1,10 @@
 import 'package:coduck/entity/code.dart';
 import 'package:coduck/model/database.dart';
 import 'package:coduck/scaffold/edit_scaffold.dart';
+import 'package:coduck/widget/code_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 class DetailScaffold extends StatefulWidget {
   DetailScaffold(this._initialPage);
@@ -73,18 +73,7 @@ class _DetailScaffoldState extends State<DetailScaffold> {
                       children: codes
                           .map(
                             (code) => Center(
-                              child: Card(
-                                color: Colors.white,
-                                child: Container(
-                                  constraints: BoxConstraints(
-                                    maxWidth: 200,
-                                    maxHeight: 200,
-                                  ),
-                                  child: QrImage(
-                                    data: code.data,
-                                  ),
-                                ),
-                              ),
+                              child: CodeImage(code),
                             ),
                           )
                           .toList(),

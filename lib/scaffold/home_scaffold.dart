@@ -3,10 +3,10 @@ import 'package:coduck/model/database.dart';
 import 'package:coduck/model/scanner.dart';
 import 'package:coduck/scaffold/detail_scaffold.dart';
 import 'package:coduck/scaffold/settings_scaffold.dart';
+import 'package:coduck/widget/code_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 class HomeScaffold extends StatelessWidget {
   HomeScaffold(this._title);
@@ -40,12 +40,7 @@ class HomeScaffold extends StatelessWidget {
                         title: Text(
                           code.title,
                         ),
-                        trailing: Card(
-                          color: Colors.white,
-                          child: QrImage(
-                            data: code.data,
-                          ),
-                        ),
+                        trailing: CodeImage(code),
                         onTap: () => pushDetail(
                           context,
                           codes.indexOf(code),
