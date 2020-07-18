@@ -1,4 +1,4 @@
-name: qrstocker
+name: coduck
 description: Stocker for QR code.
 
 # The following line prevents the package from being accidentally published to
