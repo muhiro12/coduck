@@ -1,6 +1,6 @@
 # coduck
 
-Stock your code.
+Stock your codes.
 
 ## Getting Started
 
