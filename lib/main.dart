@@ -1,6 +1,6 @@
+import 'package:coduck/model/database.dart';
+import 'package:coduck/scaffold/home_scaffold.dart';
 import 'package:flutter/material.dart';
-import 'package:qrstocker/model/database.dart';
-import 'package:qrstocker/scaffold/home_scaffold.dart';
 
 void main() async {
   await Database.init();
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     const primaryColor = Colors.orange;
     return MaterialApp(
-      title: 'QRStocker',
+      title: 'Coduck',
       theme: ThemeData(
         primarySwatch: primaryColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         accentColor: primaryColor,
         brightness: Brightness.dark,
       ),
-      home: MyHomePage(title: 'QRStocker'),
+      home: MyHomePage(title: 'Coduck'),
     );
   }
 }

@@ -1,7 +1,7 @@
+import 'package:coduck/entity/item.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:qrstocker/entity/item.dart';
 
 class Database {
   static String _key = HiveBox.items.toString();
@@ -36,8 +36,8 @@ class Database {
 
   static List<Item> debugData() {
     final item1 = Item();
-    item1.title = 'QRStocker';
-    item1.data = 'QRStocker';
+    item1.title = 'Coduck';
+    item1.data = 'Coduck';
     final item2 = Item();
     item2.title = 'Account';
     item2.data = 'Account';

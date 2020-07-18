@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:qrstocker/entity/item.dart';
-import 'package:qrstocker/model/database.dart';
+import 'package:coduck/entity/item.dart';
+import 'package:coduck/model/database.dart';
 
 class EditScaffold extends StatelessWidget {
   EditScaffold(this._item)
