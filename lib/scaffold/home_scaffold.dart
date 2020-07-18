@@ -1,12 +1,12 @@
-import 'package:coduck/entity/item.dart';
+import 'package:coduck/entity/code.dart';
 import 'package:coduck/model/database.dart';
 import 'package:coduck/model/scanner.dart';
 import 'package:coduck/scaffold/detail_scaffold.dart';
 import 'package:coduck/scaffold/settings_scaffold.dart';
+import 'package:coduck/widget/code_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 class HomeScaffold extends StatelessWidget {
   HomeScaffold(this._title);
@@ -17,8 +17,8 @@ class HomeScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: Database.listenable(),
-      builder: (context, Box<Item> box, __) {
-        final List<Item> items = box.values.toList();
+      builder: (context, Box<Code> box, __) {
+        final List<Code> codes = box.values.toList();
         return Scaffold(
           appBar: AppBar(
             title: Text(
@@ -33,22 +33,17 @@ class HomeScaffold extends StatelessWidget {
           ),
           body: SafeArea(
             child: ListView(
-              children: items
+              children: codes
                   .map(
-                    (item) => Card(
+                    (code) => Card(
                       child: ListTile(
                         title: Text(
-                          item.title,
+                          code.title,
                         ),
-                        trailing: Card(
-                          color: Colors.white,
-                          child: QrImage(
-                            data: item.data,
-                          ),
-                        ),
+                        trailing: CodeImage(code),
                         onTap: () => pushDetail(
                           context,
-                          items.indexOf(item),
+                          codes.indexOf(code),
                         ),
                       ),
                     ),
@@ -67,17 +62,13 @@ class HomeScaffold extends StatelessWidget {
   }
 
   void _scan(BuildContext context) async {
-    final data = await Scanner.scan();
+    final result = await Scanner.scan();
 
-    if (data == null) {
+    if (result == null) {
       return;
     }
 
-    final item = Item();
-    item.title = data;
-    item.data = data;
-
-    Database.save(item).then(
+    Database.save(result).then(
       (success) {
         if (success) {
           return;
