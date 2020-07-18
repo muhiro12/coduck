@@ -1,3 +1,4 @@
+import 'package:coduck/model/app_theme.dart';
 import 'package:coduck/model/database.dart';
 import 'package:coduck/scaffold/home_scaffold.dart';
 import 'package:flutter/material.dart';
@@ -10,18 +11,10 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    const primaryColor = Colors.orange;
     return MaterialApp(
       title: 'Coduck',
-      theme: ThemeData(
-        primarySwatch: primaryColor,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      darkTheme: ThemeData(
-        primarySwatch: primaryColor,
-        accentColor: primaryColor,
-        brightness: Brightness.dark,
-      ),
+      theme: AppTheme.light(),
+      darkTheme: AppTheme.dark(),
       home: MyHomePage(title: 'Coduck'),
     );
   }
