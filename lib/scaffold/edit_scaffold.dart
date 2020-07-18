@@ -1,5 +1,7 @@
 import 'package:coduck/entity/code.dart';
 import 'package:coduck/model/database.dart';
+import 'package:coduck/parameter/app_color.dart';
+import 'package:coduck/parameter/app_size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -37,10 +39,10 @@ class EditScaffold extends StatelessWidget {
         body: SafeArea(
           child: Container(
             padding: EdgeInsets.fromLTRB(
-              40,
-              20,
-              40,
-              20,
+              AppSize.spaceL,
+              AppSize.spaceM,
+              AppSize.spaceL,
+              AppSize.spaceM,
             ),
             child: Form(
               child: ListView(
@@ -102,7 +104,7 @@ class EditScaffold extends StatelessWidget {
             child: Text(
               'Delete',
               style: TextStyle(
-                color: Colors.red,
+                color: AppColor.red,
               ),
             ),
             onPressed: () {

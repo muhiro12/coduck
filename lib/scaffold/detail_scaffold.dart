@@ -1,5 +1,6 @@
 import 'package:coduck/entity/code.dart';
 import 'package:coduck/model/database.dart';
+import 'package:coduck/parameter/app_size.dart';
 import 'package:coduck/scaffold/edit_scaffold.dart';
 import 'package:coduck/widget/code_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -45,10 +46,10 @@ class _DetailScaffoldState extends State<DetailScaffold> {
           body: SafeArea(
             child: Container(
               padding: EdgeInsets.fromLTRB(
-                40,
-                20,
-                40,
-                20,
+                AppSize.spaceL,
+                AppSize.spaceM,
+                AppSize.spaceL,
+                AppSize.spaceM,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

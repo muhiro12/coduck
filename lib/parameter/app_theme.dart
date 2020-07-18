@@ -1,11 +1,12 @@
+import 'package:coduck/parameter/app_color.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {
   static ThemeData light() {
     final light = ThemeData(
       brightness: Brightness.light,
-      primarySwatch: _primaryColor,
-      scaffoldBackgroundColor: Colors.white,
+      primarySwatch: AppColor.primaryColor,
+      scaffoldBackgroundColor: AppColor.white,
     );
     return _themeData(light);
   }
@@ -13,9 +14,9 @@ class AppTheme {
   static ThemeData dark() {
     final dark = ThemeData(
       brightness: Brightness.dark,
-      primarySwatch: _primaryColor,
-      scaffoldBackgroundColor: Colors.black,
-      accentColor: _primaryColor,
+      primarySwatch: AppColor.primaryColor,
+      scaffoldBackgroundColor: AppColor.black,
+      accentColor: AppColor.primaryColor,
     );
     return _themeData(dark);
   }
@@ -30,12 +31,10 @@ class AppTheme {
     );
   }
 
-  static const MaterialColor _primaryColor = Colors.orange;
-
   static FloatingActionButtonThemeData _floatingActionButtonThemeData(
       ThemeData themeData) {
     return themeData.floatingActionButtonTheme.copyWith(
-      foregroundColor: Colors.white,
+      foregroundColor: AppColor.white,
     );
   }
 }
