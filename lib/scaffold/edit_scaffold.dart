@@ -1,18 +1,18 @@
+import 'package:coduck/entity/code.dart';
+import 'package:coduck/model/database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:coduck/entity/item.dart';
-import 'package:coduck/model/database.dart';
 
 class EditScaffold extends StatelessWidget {
-  EditScaffold(this._item)
+  EditScaffold(this._code)
       : _titleController = TextEditingController(
-          text: _item.title,
+          text: _code.title,
         ),
         _noteController = TextEditingController(
-          text: _item.note,
+          text: _code.note,
         );
 
-  final Item _item;
+  final Code _code;
   final TextEditingController _titleController;
   final TextEditingController _noteController;
 
@@ -22,7 +22,7 @@ class EditScaffold extends StatelessWidget {
       onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(_item.title),
+          title: Text(_code.title),
           leading: IconButton(
             icon: Icon(Icons.close),
             onPressed: () => Navigator.pop(context),
@@ -86,7 +86,7 @@ class EditScaffold extends StatelessWidget {
     showDialog(
       context: context,
       child: CupertinoAlertDialog(
-        title: Text('Are you sure you want to delete this item?'),
+        title: Text('Are you sure you want to delete this code?'),
         actions: <Widget>[
           FlatButton(
             child: Text(
@@ -120,24 +120,24 @@ class EditScaffold extends StatelessWidget {
 
   void _save() {
     Database.save(
-      _item
+      _code
         ..title = _titleController.text
         ..note = _noteController.text,
     );
   }
 
   void _delete() {
-    Database.delete(_item);
+    Database.delete(_code);
   }
 
   static void push(
     BuildContext context,
-    Item item,
+    Code code,
   ) {
     Navigator.push(
       context,
       PageRouteBuilder(
-        pageBuilder: (_, __, ___) => EditScaffold(item),
+        pageBuilder: (_, __, ___) => EditScaffold(code),
       ),
     );
   }
