@@ -1,11 +1,11 @@
+import 'package:coduck/entity/item.dart';
+import 'package:coduck/model/database.dart';
+import 'package:coduck/model/scanner.dart';
+import 'package:coduck/scaffold/detail_scaffold.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:qrstocker/entity/item.dart';
-import 'package:qrstocker/model/database.dart';
-import 'package:qrstocker/model/scanner.dart';
-import 'package:qrstocker/scaffold/detail_scaffold.dart';
 
 class HomeScaffold extends StatelessWidget {
   HomeScaffold(this._title);

@@ -1,4 +1,4 @@
-# qrstocker
+# coduck
 
 Stocker for QR code.
 
