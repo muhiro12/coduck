@@ -1,38 +1,43 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'item.dart';
+part of 'code.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class ItemAdapter extends TypeAdapter<Item> {
+class CodeAdapter extends TypeAdapter<Code> {
   @override
   final typeId = 0;
 
   @override
-  Item read(BinaryReader reader) {
+  Code read(BinaryReader reader) {
     var numOfFields = reader.readByte();
     var fields = <int, dynamic>{
       for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Item()
-      ..title = fields[1] as String
-      ..data = fields[2] as String
-      ..note = fields[3] as String;
+    return Code(
+      fields[1] as int,
+      fields[2] as String,
+    )
+      ..updatedAt = fields[0] as DateTime
+      ..title = fields[3] as String
+      ..note = fields[4] as String;
   }
 
   @override
-  void write(BinaryWriter writer, Item obj) {
+  void write(BinaryWriter writer, Code obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.updatedAt)
       ..writeByte(1)
-      ..write(obj.title)
+      ..write(obj.type)
       ..writeByte(2)
       ..write(obj.data)
       ..writeByte(3)
+      ..write(obj.title)
+      ..writeByte(4)
       ..write(obj.note);
   }
 }

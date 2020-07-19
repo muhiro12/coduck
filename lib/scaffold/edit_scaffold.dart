@@ -1,18 +1,20 @@
+import 'package:coduck/entity/code.dart';
+import 'package:coduck/model/database.dart';
+import 'package:coduck/parameter/app_color.dart';
+import 'package:coduck/parameter/app_size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:qrstocker/entity/item.dart';
-import 'package:qrstocker/model/database.dart';
 
 class EditScaffold extends StatelessWidget {
-  EditScaffold(this._item)
+  EditScaffold(this._code)
       : _titleController = TextEditingController(
-          text: _item.title,
+          text: _code.title,
         ),
         _noteController = TextEditingController(
-          text: _item.note,
+          text: _code.note,
         );
 
-  final Item _item;
+  final Code _code;
   final TextEditingController _titleController;
   final TextEditingController _noteController;
 
@@ -22,13 +24,15 @@ class EditScaffold extends StatelessWidget {
       onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(_item.title),
+          title: Text(_code.title),
           leading: IconButton(
+            tooltip: 'Cancel',
             icon: Icon(Icons.close),
             onPressed: () => Navigator.pop(context),
           ),
           actions: <Widget>[
             IconButton(
+              tooltip: 'Delete',
               icon: Icon(Icons.delete),
               onPressed: () => _showDeleteDialog(context),
             ),
@@ -37,10 +41,10 @@ class EditScaffold extends StatelessWidget {
         body: SafeArea(
           child: Container(
             padding: EdgeInsets.fromLTRB(
-              40,
-              20,
-              40,
-              20,
+              AppSize.spaceL,
+              AppSize.spaceM,
+              AppSize.spaceL,
+              AppSize.spaceM,
             ),
             child: Form(
               child: ListView(
@@ -78,6 +82,9 @@ class EditScaffold extends StatelessWidget {
             );
           },
         ),
+        bottomNavigationBar: SizedBox(
+          height: kBottomNavigationBarHeight + AppSize.spaceL,
+        ),
       ),
     );
   }
@@ -86,7 +93,7 @@ class EditScaffold extends StatelessWidget {
     showDialog(
       context: context,
       child: CupertinoAlertDialog(
-        title: Text('Are you sure you want to delete this item?'),
+        title: Text('Are you sure you want to delete this code?'),
         actions: <Widget>[
           FlatButton(
             child: Text(
@@ -102,7 +109,7 @@ class EditScaffold extends StatelessWidget {
             child: Text(
               'Delete',
               style: TextStyle(
-                color: Colors.red,
+                color: AppColor.red,
               ),
             ),
             onPressed: () {
@@ -120,24 +127,24 @@ class EditScaffold extends StatelessWidget {
 
   void _save() {
     Database.save(
-      _item
+      _code
         ..title = _titleController.text
         ..note = _noteController.text,
     );
   }
 
   void _delete() {
-    Database.delete(_item);
+    Database.delete(_code);
   }
 
   static void push(
     BuildContext context,
-    Item item,
+    Code code,
   ) {
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (_) => EditScaffold(item),
+      PageRouteBuilder(
+        pageBuilder: (_, __, ___) => EditScaffold(code),
       ),
     );
   }

@@ -1,65 +1,58 @@
+import 'package:coduck/entity/code.dart';
+import 'package:coduck/entity/code_type.dart';
+import 'package:coduck/parameter/app_rule.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:qrstocker/entity/item.dart';
 
 class Database {
-  static String _key = HiveBox.items.toString();
+  static String _key = HiveBox.codes.toString();
 
-  static Box<Item> _box;
+  static Box<Code> _box;
 
   static Future init() async {
     await Hive.initFlutter();
-    Hive.registerAdapter(ItemAdapter());
-    _box = await Hive.openBox<Item>(_key);
+    Hive.registerAdapter(CodeAdapter());
+    _box = await Hive.openBox<Code>(_key);
   }
 
-  static ValueListenable<Box<Item>> listenable() {
+  static ValueListenable<Box<Code>> listenable() {
     return _box.listenable();
   }
 
-  static Future<bool> save(Item item) async {
-    if (_box.length >= 5) {
+  static Future<bool> save(Code code) async {
+    if (_box.length >= AppRule.codesCountLimit) {
       return false;
     }
-    if (item.isInBox) {
-      await item.save();
+    if (code.isInBox) {
+      await code.save();
     } else {
-      await _box.add(item);
+      await _box.add(code);
     }
     return true;
   }
 
-  static Future delete(Item item) async {
-    await item.delete();
+  static Future delete(Code code) async {
+    await code.delete();
   }
 
-  static List<Item> debugData() {
-    final item1 = Item();
-    item1.title = 'QRStocker';
-    item1.data = 'QRStocker';
-    final item2 = Item();
-    item2.title = 'Account';
-    item2.data = 'Account';
-    final item3 = Item();
-    item3.title = 'Profile';
-    item3.data = 'Profile';
-    final item4 = Item();
-    item4.title = 'Payment';
-    item4.data = 'Payment';
-    final item5 = Item();
-    item5.title = 'Train';
-    item5.data = 'Train';
+  static List<Code> debugData() {
+    final qr = CodeType.qr.value();
+    final code1 = Code(qr, 'Coduck');
+    final code2 = Code(qr, 'Account');
+    final code3 = Code(qr, 'Profile');
+    final code4 = Code(qr, 'Payment');
+    final code5 = Code(qr, 'Train');
     return [
-      item1,
-      item2,
-      item3,
-      item4,
-      item5,
+      code1,
+      code2,
+      code3,
+      code4,
+      code5,
     ];
   }
 }
 
 enum HiveBox {
-  items,
+  codes,
 }

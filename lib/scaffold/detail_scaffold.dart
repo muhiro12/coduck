@@ -1,10 +1,11 @@
+import 'package:coduck/entity/code.dart';
+import 'package:coduck/model/database.dart';
+import 'package:coduck/parameter/app_size.dart';
+import 'package:coduck/scaffold/edit_scaffold.dart';
+import 'package:coduck/widget/code_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-import 'package:qrstocker/entity/item.dart';
-import 'package:qrstocker/model/database.dart';
-import 'package:qrstocker/scaffold/edit_scaffold.dart';
 
 class DetailScaffold extends StatefulWidget {
   DetailScaffold(this._initialPage);
@@ -35,20 +36,20 @@ class _DetailScaffoldState extends State<DetailScaffold> {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: Database.listenable(),
-      builder: (context, Box<Item> box, _) {
-        final items = box.values.toList();
-        final item = items[page];
+      builder: (context, Box<Code> box, _) {
+        final codes = box.values.toList();
+        final code = codes[page];
         return Scaffold(
           appBar: AppBar(
-            title: Text(item.title),
+            title: Text(code.title),
           ),
           body: SafeArea(
             child: Container(
               padding: EdgeInsets.fromLTRB(
-                40,
-                20,
-                40,
-                20,
+                AppSize.spaceL,
+                AppSize.spaceM,
+                AppSize.spaceL,
+                AppSize.spaceM,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -56,7 +57,7 @@ class _DetailScaffoldState extends State<DetailScaffold> {
                   Flexible(
                     child: TextField(
                       controller: TextEditingController(
-                        text: item.note,
+                        text: code.note,
                       ),
                       readOnly: true,
                       maxLines: 5,
@@ -70,21 +71,10 @@ class _DetailScaffoldState extends State<DetailScaffold> {
                   Expanded(
                     child: PageView(
                       controller: _pageController,
-                      children: items
+                      children: codes
                           .map(
-                            (item) => Center(
-                              child: Card(
-                                color: Colors.white,
-                                child: Container(
-                                  constraints: BoxConstraints(
-                                    maxWidth: 200,
-                                    maxHeight: 200,
-                                  ),
-                                  child: QrImage(
-                                    data: item.data,
-                                  ),
-                                ),
-                              ),
+                            (code) => Center(
+                              child: CodeImage(code),
                             ),
                           )
                           .toList(),
@@ -94,7 +84,7 @@ class _DetailScaffoldState extends State<DetailScaffold> {
                   Flexible(
                     child: TextField(
                       controller: TextEditingController(
-                        text: item.data,
+                        text: code.data,
                       ),
                       readOnly: true,
                       maxLines: 5,
@@ -112,10 +102,13 @@ class _DetailScaffoldState extends State<DetailScaffold> {
           floatingActionButton: FloatingActionButton(
             onPressed: () => _pushEdit(
               context,
-              item,
+              code,
             ),
             tooltip: 'Edit',
             child: Icon(Icons.edit),
+          ),
+          bottomNavigationBar: SizedBox(
+            height: kBottomNavigationBarHeight + AppSize.spaceL,
           ),
         );
       },
@@ -130,11 +123,11 @@ class _DetailScaffoldState extends State<DetailScaffold> {
 
   void _pushEdit(
     BuildContext context,
-    Item item,
+    Code code,
   ) {
     EditScaffold.push(
       context,
-      item,
+      code,
     );
   }
 }

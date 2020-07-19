@@ -1,11 +1,13 @@
+import 'package:coduck/entity/code.dart';
+import 'package:coduck/model/database.dart';
+import 'package:coduck/model/scanner.dart';
+import 'package:coduck/parameter/app_size.dart';
+import 'package:coduck/scaffold/detail_scaffold.dart';
+import 'package:coduck/scaffold/settings_scaffold.dart';
+import 'package:coduck/widget/code_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-import 'package:qrstocker/entity/item.dart';
-import 'package:qrstocker/model/database.dart';
-import 'package:qrstocker/model/scanner.dart';
-import 'package:qrstocker/scaffold/detail_scaffold.dart';
 
 class HomeScaffold extends StatelessWidget {
   HomeScaffold(this._title);
@@ -16,32 +18,40 @@ class HomeScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: Database.listenable(),
-      builder: (context, Box<Item> box, __) {
-        final List<Item> items = box.values.toList();
+      builder: (context, Box<Code> box, __) {
+        final List<Code> codes = box.values.toList();
         return Scaffold(
           appBar: AppBar(
             title: Text(
               _title,
             ),
+            actions: <Widget>[
+              IconButton(
+                tooltip: 'Settings',
+                icon: Icon(Icons.settings),
+                onPressed: () => _presentSettings(context),
+              )
+            ],
           ),
           body: SafeArea(
             child: ListView(
-              children: items
+              children: codes
                   .map(
-                    (item) => Card(
+                    (code) => Card(
+                      margin: EdgeInsets.fromLTRB(
+                        AppSize.spaceM,
+                        AppSize.spaceS,
+                        AppSize.spaceM,
+                        AppSize.spaceS,
+                      ),
                       child: ListTile(
                         title: Text(
-                          item.title,
+                          code.title,
                         ),
-                        trailing: Card(
-                          color: Colors.white,
-                          child: QrImage(
-                            data: item.data,
-                          ),
-                        ),
+                        trailing: CodeImage(code),
                         onTap: () => pushDetail(
                           context,
-                          items.indexOf(item),
+                          codes.indexOf(code),
                         ),
                       ),
                     ),
@@ -52,7 +62,10 @@ class HomeScaffold extends StatelessWidget {
           floatingActionButton: FloatingActionButton(
             onPressed: () => _scan(context),
             tooltip: 'Scan',
-            child: Icon(Icons.camera),
+            child: Icon(Icons.photo_camera),
+          ),
+          bottomNavigationBar: SizedBox(
+            height: kBottomNavigationBarHeight + AppSize.spaceL,
           ),
         );
       },
@@ -60,13 +73,13 @@ class HomeScaffold extends StatelessWidget {
   }
 
   void _scan(BuildContext context) async {
-    final data = await Scanner.scan();
+    final result = await Scanner.scan();
 
-    final item = Item();
-    item.title = data;
-    item.data = data;
+    if (result == null) {
+      return;
+    }
 
-    Database.save(item).then(
+    Database.save(result).then(
       (success) {
         if (success) {
           return;
@@ -90,5 +103,9 @@ class HomeScaffold extends StatelessWidget {
         builder: (_) => DetailScaffold(index),
       ),
     );
+  }
+
+  void _presentSettings(BuildContext context) {
+    SettingsScaffold.present(context);
   }
 }
