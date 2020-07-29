@@ -45,6 +45,9 @@ class Scanner {
     final pickedFile = await ImagePicker().getImage(
       source: ImageSource.gallery,
     );
+    if (pickedFile == null) {
+      return null;
+    }
     final data = await FlutterQrReader.imgScan(
       File(pickedFile.path),
     );
