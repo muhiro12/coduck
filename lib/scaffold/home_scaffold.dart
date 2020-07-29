@@ -1,5 +1,6 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:coduck/entity/code.dart';
+import 'package:coduck/model/ad_manager.dart';
 import 'package:coduck/model/database.dart';
 import 'package:coduck/model/scanner.dart';
 import 'package:coduck/parameter/app_size.dart';
@@ -74,6 +75,7 @@ class HomeScaffold extends StatelessWidget {
   }
 
   void _add(BuildContext context) async {
+    AdManager.hideBannerAd();
     final type = await showModalActionSheet<ScannerType>(
       context: context,
       actions: [
@@ -87,6 +89,7 @@ class HomeScaffold extends StatelessWidget {
         ),
       ],
     );
+    AdManager.showBannerAd();
     _scan(context, type);
   }
 
