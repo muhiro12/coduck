@@ -73,7 +73,7 @@ class HomeScaffold extends StatelessWidget {
   }
 
   void _scan(BuildContext context) async {
-    final result = await Scanner.scan();
+    final result = await Scanner.scan(ScannerType.camera);
 
     if (result == null) {
       return;

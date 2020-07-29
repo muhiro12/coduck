@@ -26,6 +26,8 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Coduck uses a camera to scan QR codes.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Coduck accesses your photo library to find QR codes.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
