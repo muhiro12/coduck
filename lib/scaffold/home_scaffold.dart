@@ -1,4 +1,6 @@
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:coduck/entity/code.dart';
+import 'package:coduck/model/ad_manager.dart';
 import 'package:coduck/model/database.dart';
 import 'package:coduck/model/scanner.dart';
 import 'package:coduck/parameter/app_size.dart';
@@ -49,7 +51,7 @@ class HomeScaffold extends StatelessWidget {
                           code.title,
                         ),
                         trailing: CodeImage(code),
-                        onTap: () => pushDetail(
+                        onTap: () => _pushDetail(
                           context,
                           codes.indexOf(code),
                         ),
@@ -60,9 +62,9 @@ class HomeScaffold extends StatelessWidget {
             ),
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: () => _scan(context),
-            tooltip: 'Scan',
-            child: Icon(Icons.photo_camera),
+            onPressed: () => _add(context),
+            tooltip: 'Add',
+            child: Icon(Icons.add),
           ),
           bottomNavigationBar: SizedBox(
             height: kBottomNavigationBarHeight + AppSize.spaceL,
@@ -72,8 +74,27 @@ class HomeScaffold extends StatelessWidget {
     );
   }
 
-  void _scan(BuildContext context) async {
-    final result = await Scanner.scan();
+  void _add(BuildContext context) async {
+    AdManager.hideBannerAd();
+    final type = await showModalActionSheet<ScannerType>(
+      context: context,
+      actions: [
+        SheetAction(
+          label: 'Camera',
+          key: ScannerType.camera,
+        ),
+        SheetAction(
+          label: 'Image',
+          key: ScannerType.image,
+        ),
+      ],
+    );
+    AdManager.showBannerAd();
+    _scan(context, type);
+  }
+
+  void _scan(BuildContext context, ScannerType type) async {
+    final result = await Scanner.scan(type);
 
     if (result == null) {
       return;
@@ -94,7 +115,7 @@ class HomeScaffold extends StatelessWidget {
     );
   }
 
-  void pushDetail(
+  void _pushDetail(
     BuildContext context,
     int index,
   ) {
