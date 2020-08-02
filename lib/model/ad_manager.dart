@@ -32,9 +32,9 @@ class AdManager {
 class _AdMobManager {
   static String get _appId {
     if (Platform.isAndroid) {
-      return "<YOUR_ANDROID_ADMOB_APP_ID>";
+      return AppSecret.adAndroidAppId;
     } else if (Platform.isIOS) {
-      return AppSecret.adAppId;
+      return AppSecret.adIOSAppId;
     } else {
       throw new UnsupportedError("Unsupported platform");
     }
@@ -42,9 +42,9 @@ class _AdMobManager {
 
   static String get _bannerAdUnitId {
     if (Platform.isAndroid) {
-      return "<YOUR_ANDROID_BANNER_AD_UNIT_ID";
+      return AppSecret.adAndroidUnitId;
     } else if (Platform.isIOS) {
-      return AppSecret.adUnitId;
+      return AppSecret.adIOSUnitId;
     } else {
       throw new UnsupportedError("Unsupported platform");
     }
