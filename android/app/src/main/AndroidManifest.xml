@@ -47,4 +47,5 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3272430040277479~3437627145"/>
     </application>
+    <uses-permission android:name="android.permission.CAMERA" />
 </manifest>
