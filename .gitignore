@@ -1,5 +1,6 @@
 # Project
 GoogleService-Info.plist
+google-services.json
 app_secret.dart
 
 # Miscellaneous
