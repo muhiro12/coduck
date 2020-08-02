@@ -33,6 +33,7 @@ dependencies:
   barcode_scan: ^3.0.1
   package_info: ^0.4.1
   barcode_widget: ^1.4.0
+  firebase_core: ^0.4.5
   firebase_analytics: ^5.0.16
   firebase_admob: ^0.9.3+2
   flutter_qr_reader: ^1.0.3
